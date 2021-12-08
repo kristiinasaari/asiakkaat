@@ -42,10 +42,40 @@ public class Dao {
 					//con.close();					
 					while(rs.next()){
 						Asiakas asiakas = new Asiakas();
-						asiakas.setEtunimi(rs.getString(1));
-						asiakas.setSukunimi(rs.getString(2));
-						asiakas.setPuhelin(rs.getInt(3));	
-						asiakas.setSposti(rs.getString(4));	
+						asiakas.setEtunimi(rs.getString(2));
+						asiakas.setSukunimi(rs.getString(3));
+						asiakas.setPuhelin(rs.getInt(4));	
+						asiakas.setSposti(rs.getString(5));	
+						asiakkaat.add(asiakas);
+					}					
+				}				
+			}	
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return asiakkaat;
+	}
+	
+	public ArrayList<Asiakas> listaaKaikki(String hakusana){
+		ArrayList<Asiakas> asiakkaat = new ArrayList<Asiakas>();
+		sql = "SELECT * FROM asiakkaat WHERE etunimi LIKE ? or sukunimi LIKE ? or sposti LIKE ?";       
+		try {
+			con=yhdista();
+			if(con!=null){ //jos yhteys onnistui
+				stmtPrep = con.prepareStatement(sql);
+				stmtPrep.setString(1, "%" + hakusana + "%");
+				stmtPrep.setString(2, "%" + hakusana + "%");
+				stmtPrep.setString(3, "%" + hakusana + "%");
+        		rs = stmtPrep.executeQuery();   
+				if(rs!=null){ //jos kysely onnistui
+					//con.close();					
+					while(rs.next()){
+						Asiakas asiakas = new Asiakas();
+						asiakas.setEtunimi(rs.getString(2));
+						asiakas.setSukunimi(rs.getString(3));
+						asiakas.setPuhelin(rs.getInt(4));	
+						asiakas.setSposti(rs.getString(5));	
 						asiakkaat.add(asiakas);
 					}					
 				}				
