@@ -28,7 +28,10 @@ public class asiakkaat extends HttpServlet {
 		System.out.println("asiakkaat.doGet()");
 		String pathInfo = request.getPathInfo();
 		System.out.println("polku: "+pathInfo);
-		String hakusana = pathInfo.replace("/", "");
+		String hakusana="";
+		if(pathInfo!=null) {
+			hakusana = pathInfo.replace("/", "");
+		}
 		Dao dao = new Dao();
         ArrayList<Asiakas> asiakkaat = dao.listaaKaikki(hakusana);
         System.out.println(asiakkaat);

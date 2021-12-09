@@ -2,17 +2,14 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<title>Insert title here</title>
-<style>
-.oikealle{
-	text-align: right;
-}
-
-</style>
+<link rel = "stylesheet" type="text/css" href="css/main.css">
+<title>Asiakkaiden haku</title>
 </head>
+
 <body>
 <table id="listaus" border="1"> <%-- SIIVOA BORDER POIS LOPUKSI --%>
 		<thead>
