@@ -86,4 +86,38 @@ public class Dao {
 		}		
 		return asiakkaat;
 	}
+	
+	public boolean lisaaAsiakas(Asiakas asiakas) {
+		boolean paluuArvo=true;
+		sql="INSERT INTO asiakkaat VALUES(?,?,?,?)";
+		try {
+			con = yhdista();
+			stmtPrep=con.prepareStatement(sql);
+			stmtPrep.setString(1, asiakas.getEtunimi());
+			stmtPrep.setString(2, asiakas.getSukunimi());
+			stmtPrep.setInt(3, asiakas.getPuhelin());
+			stmtPrep.setString(4, asiakas.getSposti());
+			stmtPrep.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			paluuArvo=false;
+		}
+		return paluuArvo;
+	}
+	public boolean poistaAsiakas(String etunimi){
+		boolean paluuArvo=true;
+		sql="DELETE FROM asiakkaat WHERE etunimi=?";						  
+		try {
+			con = yhdista();
+			stmtPrep=con.prepareStatement(sql); 
+			stmtPrep.setString(1, etunimi);			
+			stmtPrep.executeUpdate();
+	        con.close();
+		} catch (Exception e) {				
+			e.printStackTrace();
+			paluuArvo=false;
+		}				
+		return paluuArvo;
+	}
 }
