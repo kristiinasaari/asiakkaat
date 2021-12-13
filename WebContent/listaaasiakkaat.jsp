@@ -53,28 +53,28 @@ $(document).ready(function(){
 
 function haeAsiakkaat(){
 	$("#listaus tbody").empty();
-	$.ajax({url:"asiakkaat/"+$("#hakusana").val(), type:"GET", dataType:"json", success:function(result){
-		$.each(result.asiakkaat, function(i, field){
-			var htmlStr;
-			htmlStr+="<tr id='rivi_"+field.etunimi+"'>";
-			htmlStr+="<td>"+field.etunimi+"</td>";
-			htmlStr+="<td>"+field.sukunimi+"</td>";
-			htmlStr+="<td>"+field.puhelin+"</td>";
-			htmlStr+="<td>"+field.sposti+"</td>";
-			htmlStr+="<td><span class='poista' onclick=poista('"+field.etunimi+"')>Poista</span></td>";
-			htmlStr+="</tr>";
-			$("#listaus tbody").append(htmlStr);
-		});	
-	}});
+	$.getJSON({url:"asiakkaat/"+$("#hakusana").val(), type:"GET", dataType:"json", success:function(result){	
+		$.each(result.asiakkaat, function(i, field){  
+        	var htmlStr;
+        	htmlStr+="<tr id='rivi_"+field.asiakas_id+"'>";
+        	htmlStr+="<td>"+field.etunimi+"</td>";
+        	htmlStr+="<td>"+field.sukunimi+"</td>";
+        	htmlStr+="<td>"+field.puhelin+"</td>";
+        	htmlStr+="<td>"+field.sposti+"</td>";  
+        	htmlStr+="<td><span class='poista' onclick=poista("+field.asiakas_id+",'"+field.etunimi+"','"+field.sukunimi+"')>Poista</span></td>"; 
+        	htmlStr+="</tr>";
+        	$("#listaus tbody").append(htmlStr);
+        });
+    }});	
 }
-function poista(etunimi){
-	if(confirm("Poista asiakas " + etunimi +"?")){
-		$.ajax({url:"asiakkaat/"+etunimi, type:"DELETE", dataType:"json", success:function(result) { //joko {"response:1"} tai {"response:0"}
+function poista(asiakas_id, etunimi, sukunimi){
+	if(confirm("Poista asiakas " + etunimi +" "+ sukunimi +"?")){	
+		$.ajax({url:"asiakkaat/"+asiakas_id, type:"DELETE", dataType:"json", success:function(result) { //result on joko {"response:1"} tai {"response:0"}
 	        if(result.response==0){
 	        	$("#ilmo").html("Asiakkaan poisto epäonnistui.");
 	        }else if(result.response==1){
-	        	$("#rivi_"+etunimi).css("background-color", "red"); //Värjätään poistetun asiakkaan rivi
-	        	alert("Asiakkaan " + etunimi +" poisto onnistui.");
+	        	$("#rivi_"+asiakas_id).css("background-color", "red"); //Värjätään poistetun asiakkaan rivi
+	        	alert("Asiakkaan " + etunimi +" "+ sukunimi +" poisto onnistui.");
 				haeAsiakkaat();        	
 			}
 	    }});

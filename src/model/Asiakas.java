@@ -1,17 +1,25 @@
 package model;
 
 public class Asiakas {
-	private String etunimi, sukunimi, sposti;
-	private int puhelin;
+	private int asiakas_id;
+	private String etunimi, sukunimi, puhelin, sposti;
 	public Asiakas() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	public Asiakas(String etunimi, String sukunimi, String sposti, int puhelin) {
+	public Asiakas(int asiakas_id, String etunimi, String sukunimi, String puhelin, String sposti) {
 		super();
+		this.asiakas_id = asiakas_id;
 		this.etunimi = etunimi;
 		this.sukunimi = sukunimi;
-		this.sposti = sposti;
 		this.puhelin = puhelin;
+		this.sposti = sposti;
+	}
+	public int getAsiakas_id() {
+		return asiakas_id;
+	}
+	public void setAsiakas_id(int asiakas_id) {
+		this.asiakas_id = asiakas_id;
 	}
 
 	public String getEtunimi() {
@@ -26,22 +34,22 @@ public class Asiakas {
 	public void setSukunimi(String sukunimi) {
 		this.sukunimi = sukunimi;
 	}
+	public String getPuhelin() {
+		return puhelin;
+	}
+	public void setPuhelin(String puhelin) {
+		this.puhelin = puhelin;
+	}
 	public String getSposti() {
 		return sposti;
 	}
 	public void setSposti(String sposti) {
 		this.sposti = sposti;
 	}
-	public int getPuhelin() {
-		return puhelin;
-	}
-	public void setPuhelin(int puhelin) {
-		this.puhelin = puhelin;
-	}
 	@Override
 	public String toString() {
-		return "Asiakas [etunimi=" + etunimi + ", sukunimi=" + sukunimi + ", sposti=" + sposti
-				+ ", puhelin=" + puhelin + "]";
+		return "Asiakas [asiakas_id=" + asiakas_id + ", etunimi=" + etunimi + ", sukunimi=" + sukunimi + ", puhelin="
+				+ puhelin + ", sposti=" + sposti + "]";
 	}
 	
 }

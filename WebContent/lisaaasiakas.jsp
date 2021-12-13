@@ -57,13 +57,11 @@ $(document).ready(function(){
 			},
 			puhelin: {
 				required: true,
-				number: true,
-				minlength: 9,
-				maxlength: 12
+				minlength: 5,
 			},
 			sposti: {
 				required: true,
-				minlength: 2				
+				email: true				
 			}
 		},
 		messages: {
@@ -77,13 +75,11 @@ $(document).ready(function(){
 			},
 			puhelin: {
 				required: "Puuttuu",
-				number: "Ei kelpaa",
-				minlength: "Liian lyhyt",
-				maxlength: "Liian pitkä"
+				minlength: "Liian lyhyt"
 			},
 			sposti: {
 				required: "Puuttuu",
-				minlength: "Liian lyhyt"
+				email: "Ei kelpaa"
 			}
 			
 		},
@@ -91,6 +87,7 @@ $(document).ready(function(){
 			lisaaTiedot();
 		}
 	});
+	$("#etunimi").focus();
 });
 function lisaaTiedot(){	
 	var formJsonStr = formDataJsonStr($("#tiedot").serializeArray()); //muutetaan lomakkeen tiedot json-stringiksi
