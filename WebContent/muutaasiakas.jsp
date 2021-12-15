@@ -22,10 +22,10 @@
 				<th>Sukunimi</th>
 				<th>Puhelin</th>
 				<th>Sposti</th>
-				<th></th>
+				<th>Hallinta</th>
 			</tr>
 		</thead>
-		<tbody>
+
 			<tr>
 				<td><input type="text" name="etunimi" id="etunimi"></td>
 				<td><input type="text" name="sukunimi" id="sukunimi"></td>
@@ -33,9 +33,10 @@
 				<td><input type="text" name="sposti" id="sposti"></td>
 				<td><input type="submit" id="tallenna" value="Hyväksy"></td>
 			</tr>
+		<tbody>
 		</tbody>
 	</table>
-
+	<input type="hidden" name="asiakas_id" id="asiakas_id">
 </form>
 <span id="ilmo"></span>
 </body>
@@ -45,13 +46,19 @@ $(document).ready(function(){
 		document.location="listaaasiakkaat.jsp";
 	});
 	
-	var asiakas_id = requestURLParam("asiakas_id");
-	$.ajax({url:"asiakkaat/haeyksi/"+asiakas_id, type:"GET", dataType:"json", success:function(result){
-		$("#etunimi").val(result.etunimi);
+	$("#etunimi").focus();
+	
+	//Haetaan muutettavan asiakkaan tiedot. Kutsutaan backin GET-metodia ja välitetään kutsun mukana muutettavan tiedon id
+	//GET /asiakkaat/haeyksi/id
+	var asiakas_id = requestURLParam("asiakas_id"); //Funktio löytyy scripts/main.js 	
+	$.ajax({url:"asiakkaat/haeyksi/"+asiakas_id, type:"GET", dataType:"json", success:function(result){	
+		$("#etunimi").val(result.etunimi);	
 		$("#sukunimi").val(result.sukunimi);
 		$("#puhelin").val(result.puhelin);
-		$("#sposti").val(result.sposti);
-	}});
+		$("#sposti").val(result.sposti);		
+		$("#asiakas_id").val(result.asiakas_id);		
+    }});
+	
 	$("#tiedot").validate({
 		rules: {
 			etunimi: {
@@ -98,17 +105,14 @@ $(document).ready(function(){
 });
 function paivitaAsiakas(){	
 	var formJsonStr = formDataJsonStr($("#tiedot").serializeArray()); //muutetaan lomakkeen tiedot json-stringiksi
-	$.ajax({url:"asiakkaat", data:formJsonStr, type:"PUT", dataType:"json", success:function(result) { //result on joko {"response:1"} tai {"response:0"}       
-		if(result.response==0){
-      	$("#ilmo").html("Asiakkaan päivittäminen epäonnistui.");
-      }else if(result.response==1){			
-      	$("#ilmo").html("Asiakkaan päivittäminen onnistui.");
-      	$("#etunimi", "#sukunimi", "#puhelin", "#sposti").val("");
+	$.ajax({url:"asiakkaat", data:formJsonStr, type:"PUT", success:function(result) { //result on joko {"response:1"} tai {"response:0"}		
+      if(result.response==0){
+      	$("#ilmo").html("Tietojen päivitys epäonnistui.");
+      }else if(result.response==1){
+      	$("#ilmo").html("Tietojen päivitys onnistui.");
 		}
-  }});	
+  }});
 }
-
-
 
 </script>
 </html>
